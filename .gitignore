@@ -1,0 +1,12 @@
+# Textbook scans and homework photos stay local (copyright + personal data)
+*.PNG
+*.png
+*.jpeg
+*.jpg
+*.JPG
+*.JPEG
+*.heic
+*.HEIC
+Arbeit/
+.claude/
+.DS_Store
