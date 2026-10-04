@@ -320,6 +320,16 @@ const CHAPTERS = [
         es: "Después de este viaje puedes:\n\n• nombrar las condiciones para el surgimiento de Roma (naturaleza, economía, sociedad, dominio, religión, leyenda)\n• contar la leyenda de Rómulo y Remo\n• comparar leyenda y ciencia\n• leer y evaluar un mapa histórico en 6 pasos\n• calcular distancias y tiempos de viaje con la escala" },
     ] },
 
+  /* Film ------------------------------------------------------------- */
+  { id: "film", num: 10, short: "Film", kicker: "Erklärfilm", title: "Der Film", sub: "Die ganze Reise in sechs Minuten",
+    blocks: [
+      { type: "text", title: "So schaust du den Film",
+        de: "Der Film erzählt das ganze Kapitel: die Landschaft, die Einwanderer, das Wachstum der Stadt, die [[sage|Sage]], der Vergleich mit der [[wissenschaft|Wissenschaft]], die Karte und die Methode.\n\nEs gibt zwei Versionen: **Deutsch gesprochen mit spanischen Untertiteln** (so wie in der Prüfung: deutsch hören, spanisch mitlesen) und **Spanisch gesprochen mit deutschen Untertiteln** (zum Verstehen). Tipp: Schau zuerst die spanische Version, dann die deutsche.\n\nUnter dem Film steht der ganze Text in beiden Sprachen. Tippe auf einen Satz, und der Film springt dorthin.",
+        es: "La película cuenta todo el capítulo: el paisaje, los inmigrantes, el crecimiento de la ciudad, la leyenda, la comparación con la ciencia, el mapa y el método.\n\nHay dos versiones: **hablada en alemán con subtítulos en español** (como en el examen: escuchar alemán, leer español) y **hablada en español con subtítulos en alemán** (para entender). Consejo: mira primero la versión en español, luego la alemana.\n\nDebajo de la película está todo el texto en los dos idiomas. Toca una frase y la película salta a ese punto." },
+      { type: "video" },
+      { type: "transcript" },
+    ] },
+
   /* 1 ---------------------------------------------------------------- */
   { id: "landschaft", num: 1, short: "Landschaft", title: "Die Landschaft Roms", sub: "Warum genau hier? (D1)",
     blocks: [

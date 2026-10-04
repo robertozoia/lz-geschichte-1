@@ -10,3 +10,6 @@
 Arbeit/
 .claude/
 .DS_Store
+# Film: Arbeitsdateien nicht, Poster schon
+film/_work/
+!film/poster.jpg

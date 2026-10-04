@@ -627,6 +627,47 @@
     return blockWrap("b-glossary", null, wrap, null);
   };
 
+  /* ---------- Film ---------- */
+  const FILM = { lang: "de", video: null };
+  const FILM_SRC = { de: "film/rom-film-de.mp4", es: "film/rom-film-es.mp4" };
+  R.video = () => {
+    const video = el("video", { class: "film-video", controls: true, playsinline: true, preload: "metadata", poster: "film/poster.jpg" });
+    video.src = FILM_SRC.de;
+    FILM.video = video;
+    const label = { de: "Deutsch gesprochen · spanische Untertitel", es: "Spanisch gesprochen · deutsche Untertitel" };
+    const tabs = el("div", { class: "film-tabs" }, ["de", "es"].map(l => el("button", { type: "button", class: "chip" + (l === "de" ? " on" : ""), dataset: { l }, text: label[l], onclick: e => {
+      FILM.lang = l; tabs.querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c === e.currentTarget));
+      const t = video.currentTime, playing = !video.paused;
+      video.src = FILM_SRC[l]; video.load(); video.currentTime = t; if (playing) video.play().catch(() => {});
+      document.querySelectorAll(".tr-line").forEach(x => x.classList.remove("active"));
+    } })));
+    const dl = el("p", { class: "film-dl" }, ["Herunterladen: ", el("a", { href: FILM_SRC.de, download: "rom-film-deutsch.mp4", text: "deutsche Version" }), " · ", el("a", { href: FILM_SRC.es, download: "rom-film-spanisch.mp4", text: "spanische Version" })]);
+    video.addEventListener("timeupdate", () => {
+      const key = FILM.lang === "de" ? "tde" : "tes"; const t = video.currentTime; let best = null;
+      document.querySelectorAll(".tr-line").forEach(x => { const st = Number(x.dataset[key]); if (st <= t + 0.05) best = x; x.classList.remove("active"); });
+      if (best) best.classList.add("active");
+    });
+    return blockWrap("b-video", "Rom – vom Dorf zum Weltreich (Film)", el("div", { class: "film" }, [tabs, el("div", { class: "film-frame" }, [video]), dl]), null);
+  };
+  R.transcript = () => {
+    if (typeof FILM_SCRIPT === "undefined") return el("div");
+    const wrap = el("div", { class: "transcript" });
+    FILM_SCRIPT.scenes.forEach(sc => {
+      const sec = el("section", { class: "tr-scene" });
+      if (sc.kicker) sec.appendChild(el("h4", { text: sc.kicker }));
+      sc.lines.forEach(l => {
+        const row = el("button", { type: "button", class: "tr-line", dataset: { tde: l.tde, tes: l.tes }, onclick: () => {
+          const v = FILM.video; if (!v) return;
+          v.currentTime = FILM.lang === "de" ? l.tde : l.tes; v.play().catch(() => {});
+          v.scrollIntoView({ behavior: "smooth", block: "center" });
+        } }, [el("span", { class: "tr-de", text: l.de }), el("span", { class: "tr-es", lang: "es", text: l.es })]);
+        sec.appendChild(row);
+      });
+      wrap.appendChild(sec);
+    });
+    return blockWrap("b-transcript", "Der Text zum Film (Deutsch und Spanisch)", wrap, null);
+  };
+
   /* ---------- Kapitel ---------- */
   function renderChapter(id) {
     const ch = CHAPTERS.find(c => c.id === id) || CHAPTERS[0];
@@ -635,7 +676,7 @@
     main.innerHTML = "";
     const art = el("article", { class: "chapter", id: "ch-" + ch.id });
     art.appendChild(el("header", { class: "ch-head" }, [
-      el("div", { class: "ch-kicker", text: ch.num < 9 ? `Kapitel ${ch.num}` : "Nachschlagen" }),
+      el("div", { class: "ch-kicker", text: ch.num < 9 ? `Kapitel ${ch.num}` : (ch.kicker || "Nachschlagen") }),
       el("h2", { class: "ch-title", text: ch.title }),
       el("p", { class: "ch-sub", text: ch.sub }),
     ]));
