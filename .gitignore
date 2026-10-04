@@ -13,3 +13,4 @@ Arbeit/
 # Film: Arbeitsdateien nicht, Poster schon
 film/_work/
 !film/poster.jpg
+__pycache__/
