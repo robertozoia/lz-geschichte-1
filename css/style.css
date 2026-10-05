@@ -496,6 +496,22 @@ circle.arrival-griechen { fill: var(--map-griechen); }
 .flash-es { font-size: 1.3rem; color: var(--tiber); font-weight: 700; }
 .flash-nav { display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
 
+/* Prüfung */
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-link { text-decoration: none; color: var(--fg); }
+.chip-link:hover { border-color: var(--accent); color: var(--accent); }
+.b-exam { border-left: 6px solid var(--accent); }
+.exam-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 8px; }
+.exam-n { flex: 0 0 auto; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-fg); font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; }
+.exam-title { margin-bottom: 2px; }
+.exam-es { font-size: 1rem; }
+.exam-note { background: var(--gold-soft); border-radius: 10px; padding: 10px 14px; margin: 6px 0 10px; font-size: .92rem; }
+.exam-sub { font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 14px 0 8px; }
+.exam-points { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.exam-points li { background: var(--surface-2); border-radius: 10px; padding: 10px 14px; border-left: 4px solid var(--gold); }
+.exam-kw { margin-top: 12px; font-size: .9rem; color: var(--muted); line-height: 1.7; }
+.exam-kw-label { font-weight: 700; color: var(--accent); }
+
 /* Film */
 .film-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
 .film-frame { background: #000; border-radius: 12px; overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%; }

@@ -96,7 +96,7 @@
     nav.innerHTML = "";
     CHAPTERS.forEach(ch => {
       const a = el("a", { href: "#" + ch.id, class: "nav-chip" + (ch.id === activeId ? " active" : "") + (state.visited[ch.id] ? " seen" : ""), text: ch.short });
-      if (ch.num < 9) a.prepend(el("span", { class: "nav-num", text: String(ch.num) }));
+      if (ch.num <= 9) a.prepend(el("span", { class: "nav-num", text: String(ch.num) }));
       if (state.coins[ch.id] || (ch.id === "training" && state.coins.big)) a.appendChild(el("span", { class: "nav-coin", "aria-label": "Münze" }));
       nav.appendChild(a);
     });
@@ -627,6 +627,26 @@
     return blockWrap("b-glossary", null, wrap, null);
   };
 
+  /* ---------- Prüfung ---------- */
+  R.chapterlinks = b => {
+    const row = el("div", { class: "chip-row" }, b.items.map(it => el("a", { href: "#" + it.id, class: "chip chip-link", text: it.label })));
+    return blockWrap("b-links", b.title, row, null);
+  };
+  R.exam = b => {
+    const head = el("div", { class: "exam-head" }, [el("span", { class: "exam-n", text: String(b.n) }), el("div", {}, [el("h3", { class: "block-title exam-title", text: b.title }), el("span", { class: "es-inline exam-es", lang: "es", text: b.es })])]);
+    const note = b.note ? el("div", { class: "exam-note" }, [el("p", { class: "de", text: b.note.de }), el("p", { class: "es-inline", lang: "es", text: b.note.es })]) : null;
+    const points = el("ul", { class: "exam-points" }, b.points.map(p => el("li", {}, [el("div", { class: "de", html: inlineMd(p.de) }), el("div", { class: "es-inline", lang: "es", html: inlineMd(p.es) })])));
+    const kw = el("div", { class: "exam-kw" }, [el("span", { class: "exam-kw-label", text: "Schlüsselwörter: " }), el("span", { text: b.keywords })]);
+    const tasks = el("div", { class: "tasks" }, b.tasks.map(it => {
+      const body = el("div", { class: "task-body" }, [el("div", { class: "de", html: md(it.de) }), el("div", { class: "es-box", lang: "es", html: md(it.es) })]);
+      body.appendChild(esToggle(body));
+      return el("details", { class: "task" }, [el("summary", {}, [el("span", { class: "afb afb-" + (it.afb.replace(/[^I]/g, "").length || 1), text: "AFB " + it.afb }), el("span", { class: "task-q", text: it.q })]), body]);
+    }));
+    const block = el("section", { class: "block b-exam" }, [head, note, el("h4", { class: "exam-sub", text: "Das musst du wissen" }), points, kw, el("h4", { class: "exam-sub", text: "Mögliche Prüfungsaufgaben (Lösung aufklappen)" }), tasks]);
+    block.appendChild(esToggle(block));
+    return block;
+  };
+
   /* ---------- Film ---------- */
   const FILM = { lang: "de", video: null };
   const FILM_SRC = { de: "film/rom-film-de.mp4", es: "film/rom-film-es.mp4" };
@@ -676,7 +696,7 @@
     main.innerHTML = "";
     const art = el("article", { class: "chapter", id: "ch-" + ch.id });
     art.appendChild(el("header", { class: "ch-head" }, [
-      el("div", { class: "ch-kicker", text: ch.num < 9 ? `Kapitel ${ch.num}` : (ch.kicker || "Nachschlagen") }),
+      el("div", { class: "ch-kicker", text: ch.num <= 9 ? `Kapitel ${ch.num}` : (ch.kicker || "Nachschlagen") }),
       el("h2", { class: "ch-title", text: ch.title }),
       el("p", { class: "ch-sub", text: ch.sub }),
     ]));
